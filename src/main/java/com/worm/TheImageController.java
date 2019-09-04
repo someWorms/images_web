@@ -87,8 +87,8 @@ public class TheImageController {
                 th.commentary.add(commentary);
             }
         }
-
-        return new ModelAndView("showImage");
+        
+        return new ModelAndView("album", model);
 
     }
 

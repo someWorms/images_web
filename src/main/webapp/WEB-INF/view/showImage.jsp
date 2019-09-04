@@ -3,12 +3,10 @@
 <html>
 <head>
     <title>full picture</title>
-
-
 </head>
 <body>
     <div>
-        <img src="/resources/images/${nameImage}" style="width: 100%;"/>
+        <img src="/resources/images/${nameImage}" style="width: 100%;" alt=" "/>
     </div>
 <hr>
     <h2>Comments:</h2><br/>
@@ -24,10 +22,16 @@
     <div>
         <%--<textarea name="addCommentary" form="addComment"> Leave your comment </textarea>--%>
         <br/>
-        <form action="addComment?nameImage=${nameImage}" method="get" id="addComment">
+<%--        <form action="addComment?nameImage=${nameImage}" method="get" id="addComment">
             <input type="text" name="addCommentary">
             <input type="submit" value="Add">
-        </form>
+        </form>--%>
+
+            <form action="addComment" method="get" id="addComment">
+                <input type="hidden" name="nameImage" value="${nameImage}">
+                <input type="text" name="addCommentary">
+                <input type="submit" value="Add">
+            </form>
     </div>
 </body>
 </html>
