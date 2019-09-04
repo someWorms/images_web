@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -76,11 +77,16 @@ public class TheImageController {
     }
 
     /*Add Comment Functional (TODO: release)*/
-    @PostMapping("addComment")
+    @GetMapping("album/addComment")
     public ModelAndView addCommentary(Map <String, Object> model,
-                                    @RequestParam("addCommentary") String commentary,
+                                    @RequestParam(name = "addCommentary") String commentary,
                                     @RequestParam(name = "nameImage") String name){
-
+        for(TheImage th : imgContainer){
+            if(name.equals(th.getFileName())){
+                System.out.println("hello");
+                th.commentary.add(commentary);
+            }
+        }
 
         return new ModelAndView("showImage");
 

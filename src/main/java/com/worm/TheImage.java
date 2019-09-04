@@ -15,7 +15,7 @@ import java.util.List;
 public class TheImage implements IFileProcess{
     @Getter @Setter private Path imageLink;
 
-    @Getter @Setter private List <String> commentary = new ArrayList<>();
+    @Getter @Setter  List <String> commentary = new ArrayList<>();
 
     @Getter private String fileName;
 

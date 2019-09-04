@@ -25,7 +25,7 @@
 
         <div>
             <%--I dont really know if it is a correct way to pass data to controller--%>
-            <a href="album/full-info?nameImage=${listImage.fileName}&commentImage=<c:forEach var="listComment" items="${listImage.commentary}">${listComment}</c:forEach>">
+            <a href="album/full-info?nameImage=${listImage.fileName}&commentImage=<c:forEach var="listComment" items="${listImage.commentary}">${listComment},</c:forEach>">
                 <img src="resources/images/${listImage.fileName}"  alt="please, update resources!"/>
             </a>
         </div>
