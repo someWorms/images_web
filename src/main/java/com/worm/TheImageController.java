@@ -1,9 +1,6 @@
 package com.worm;
 
-import net.sf.jmimemagic.Magic;
-import net.sf.jmimemagic.MagicException;
-import net.sf.jmimemagic.MagicMatchNotFoundException;
-import net.sf.jmimemagic.MagicParseException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -35,18 +33,30 @@ public class TheImageController {
     /*Upload image process*/
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("myFile") MultipartFile theFile,
-                             @RequestParam("uploadCommentary") String theCommentary) throws IOException {
+                             @RequestParam("uploadCommentary") String theCommentary) {
 
+
+        /*Validation image name*/
         for(TheImage th : imgContainer){
             if(theFile.getOriginalFilename().equals(th.getFileName())){
                 return "fail";
             }
         }
 
-        /*Validation image*/
-        InputStream inputStream = theFile.getInputStream();
-        if(ImageIO.read(inputStream) == null)
+        /*You cant get here*/
+        if(theFile == null | theFile.getOriginalFilename() == null | theFile.getOriginalFilename() == " "){
             return "fail";
+        }
+
+        /*Validation if is image*/
+        try {
+            InputStream inputStream = theFile.getInputStream();
+            if(ImageIO.read(inputStream) == null)
+                return "fail";
+        } catch (IOException e) {
+            System.out.println("error during file validation");
+            e.printStackTrace();
+        }
 
         /*Creating a new object to store a link to image and list of comments*/
         TheImage theImage = new TheImage();
@@ -60,7 +70,7 @@ public class TheImageController {
 
 
 
-        //primitive logger for console :D
+        //primitive logger for console
         for (TheImage th : imgContainer){
             System.out.println(th.getCommentary() + " " + th.getImageLink());
             System.out.println("-----------------");
@@ -78,8 +88,8 @@ public class TheImageController {
         return model;
     }
 
-    /*Show data about images, data received from GET*/
-    @GetMapping("album/full-info")
+    /*Show data about images, data received from GET req*/
+    @GetMapping("full-info")
     public ModelAndView showPic(Map<String, Object> model,
                                 @RequestParam(name = "nameImage") String nameImage,
                                 @RequestParam(name = "commentImage") List<String> commentImage){
@@ -91,7 +101,7 @@ public class TheImageController {
     }
 
     /*Add Comment Functional (TODO: release)*/
-    @GetMapping("album/addComment")
+    @PostMapping("addComment")
     public ModelAndView addCommentary(Map <String, Object> model,
                                     @RequestParam(name = "addCommentary") String commentary,
                                     @RequestParam(name = "nameImage") String name){
@@ -99,11 +109,11 @@ public class TheImageController {
             if(name.equals(th.getFileName())){
                 //System.out.println("Correct! I am in the image!");
                 th.setCommentary(commentary);
+                model.put("nameImage", name);
+                model.put("commentImage", th.getCommentary());
             }
         }
-        model.put("nameImage", name);
 
-       return new ModelAndView("showImage", model);
+        return new ModelAndView("showImage", model);
     }
-
 }

@@ -3,6 +3,12 @@
 <html>
 <head>
     <title>full picture</title>
+    <style>
+        .stylish{
+            font-size: 22px;
+        }
+
+    </style>
 </head>
 <body>
     <div>
@@ -10,28 +16,23 @@
     </div>
 <hr>
     <h2>Comments:</h2><br/>
-    <div>
-
+    <div class="stylish">
         <c:forEach var="comments" items="${commentImage}">
             <br/>${comments}
         </c:forEach>
-
     </div>
     <br>
-
-    <div>
-        <%--<textarea name="addCommentary" form="addComment"> Leave your comment </textarea>--%>
+    <div class="stylish">
         <br/>
-<%--        <form action="addComment?nameImage=${nameImage}" method="get" id="addComment">
-            <input type="text" name="addCommentary">
-            <input type="submit" value="Add">
-        </form>--%>
+        <textarea name="addCommentary" form="addComment"> Leave your comment </textarea><br/>
 
-            <form action="addComment" method="get" id="addComment">
+        <form action="addComment" method="post" id="addComment">
                 <input type="hidden" name="nameImage" value="${nameImage}">
-                <input type="text" name="addCommentary">
+            <%-- <input type="text" name="addCommentary"> --%>
                 <input type="submit" value="Add">
-            </form>
+        </form>
+        <a href="/album">To album</a>
+        <br/>
     </div>
 </body>
 </html>

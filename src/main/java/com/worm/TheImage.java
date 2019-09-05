@@ -5,8 +5,6 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
