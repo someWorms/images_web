@@ -83,13 +83,12 @@ public class TheImageController {
                                     @RequestParam(name = "nameImage") String name){
         for(TheImage th : imgContainer){
             if(name.equals(th.getFileName())){
-                System.out.println("hello");
-                th.commentary.add(commentary);
+                //System.out.println("Correct! I am in the image!");
+                th.setCommentary(commentary);
             }
         }
-        
-        return new ModelAndView("album", model);
 
+       return new ModelAndView("album");
     }
 
 }

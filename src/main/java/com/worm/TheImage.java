@@ -15,12 +15,15 @@ import java.util.List;
 public class TheImage implements IFileProcess{
     @Getter @Setter private Path imageLink;
 
-    @Getter @Setter  List <String> commentary = new ArrayList<>();
+    @Getter private List <String> commentary = new ArrayList<>();
 
     @Getter private String fileName;
 
     private static String folder = "D:\\Development\\Java\\webproject\\src\\main\\webapp\\resources\\images\\";
 
+    public void setCommentary(String commentary) {
+        this.commentary.add(commentary);
+    }
 
     @Override
     public void saveFile(MultipartFile theFile, String commentary) throws IOException {
