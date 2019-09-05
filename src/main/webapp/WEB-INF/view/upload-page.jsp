@@ -11,7 +11,7 @@
     </form>
     <br/>
 
-    <textarea name="uploadCommentary" form="uploadForm">Please, leave your comment</textarea>
+    <textarea name="uploadCommentary" form="uploadForm">Please leave your comment</textarea>
 
 </body>
 </html>

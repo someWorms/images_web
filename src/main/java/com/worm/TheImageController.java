@@ -1,5 +1,9 @@
 package com.worm;
 
+import net.sf.jmimemagic.Magic;
+import net.sf.jmimemagic.MagicException;
+import net.sf.jmimemagic.MagicMatchNotFoundException;
+import net.sf.jmimemagic.MagicParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,12 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
-
-import javax.validation.constraints.Size;
+import javax.imageio.ImageIO;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +35,18 @@ public class TheImageController {
     /*Upload image process*/
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("myFile") MultipartFile theFile,
-                             @RequestParam("uploadCommentary") @Size(min=4, message = "should be 1+") String theCommentary) {
+                             @RequestParam("uploadCommentary") String theCommentary) throws IOException {
+
+        for(TheImage th : imgContainer){
+            if(theFile.getOriginalFilename().equals(th.getFileName())){
+                return "fail";
+            }
+        }
+
+        /*Validation image*/
+        InputStream inputStream = theFile.getInputStream();
+        if(ImageIO.read(inputStream) == null)
+            return "fail";
 
         /*Creating a new object to store a link to image and list of comments*/
         TheImage theImage = new TheImage();
@@ -87,8 +101,9 @@ public class TheImageController {
                 th.setCommentary(commentary);
             }
         }
+        model.put("nameImage", name);
 
-       return new ModelAndView("album");
+       return new ModelAndView("showImage", model);
     }
 
 }

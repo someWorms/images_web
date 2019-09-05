@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.imageio.ImageIO;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,6 +27,14 @@ public class TheImage implements IFileProcess{
         this.commentary.add(commentary);
     }
 
+
+    public void validate(MultipartFile mp){
+
+
+
+    }
+
+
     @Override
     public void saveFile(MultipartFile theFile, String commentary) throws IOException {
 
@@ -39,5 +49,6 @@ public class TheImage implements IFileProcess{
 
         /*this.commentary = commentary;*/
         this.fileName = theFile.getOriginalFilename();
+
     }
 }
